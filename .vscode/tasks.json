@@ -1,0 +1,88 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Test",
+      "type": "shell",
+      "command": "python -m pytest tests/ -v --cov=app --cov-report=term-missing",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Lint & Format",
+      "type": "shell",
+      "command": "python -m ruff format app/ tests/ && python -m ruff check --fix app/ tests/",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": {
+        "owner": "ruff",
+        "fileLocation": ["relative", "${workspaceFolder}"],
+        "pattern": {
+          "regexp": "^(.+):(\\d+):(\\d+): (\\w+) (.+)$",
+          "file": 1,
+          "line": 2,
+          "column": 3,
+          "code": 4,
+          "message": 5
+        }
+      }
+    },
+    {
+      "label": "Start (Docker - everything)",
+      "type": "shell",
+      "command": "docker compose up --build",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Start (Local dev)",
+      "dependsOn": ["dev: MongoDB", "dev: API", "dev: Frontend"],
+      "problemMatcher": [],
+      "detail": "MongoDB in Docker, API + Frontend locally with hot-reload"
+    },
+    {
+      "label": "dev: MongoDB",
+      "type": "shell",
+      "command": "docker compose -f docker-compose.dev.yml up",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "group": "local-dev",
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "dev: API",
+      "type": "shell",
+      "command": "python -m uvicorn app.main:app --reload --port 8000",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "group": "local-dev",
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "dev: Frontend",
+      "type": "shell",
+      "command": "cd frontend && npm run dev",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "group": "local-dev",
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Stop",
+      "type": "shell",
+      "command": "docker compose -f docker-compose.dev.yml down; docker compose down",
+      "problemMatcher": []
+    }
+  ]
+}
