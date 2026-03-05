@@ -101,15 +101,6 @@ Application behavior — what the chatbot collects:
 ```yaml
 system_prompt: |
   You are an AI Assistant at a car insurance company...
-
-expected_fields:
-  - name: car_type
-    type: string
-    enum: ["sedan", "coupe", "station wagon", "hatchback", "minivan"]
-  - name: customer_name
-    type: string
-    pii: true
-  ...
 ```
 
 **Changing the prompt changes app behavior** — different fields, different conversation flow, different database structure. No code changes needed.
