@@ -1,6 +1,6 @@
 # Squad Nous — AI Chatbot for Customer Data Collection
 
-An AI-powered chatbot that collects customer information through natural conversation. Built for the Rabobank Squad Nous coding assignment.
+An AI-powered chatbot that collects customer information through natural conversation.
 
 ## Quick Start
 
